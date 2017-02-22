@@ -7,16 +7,22 @@ This is very small PHP 5/7 object oriented framework for handling ajax requests,
 
 <strong>Example:</strong>
 
-http://localhost/index.php?action=test&first=param1&second=param2
+http://localhost/index.php?action=test&param1=val1&param2=val2
 
 <br/>
 
 <strong>jQuery Example:</strong>
 
-  $.ajax({type: "POST", data: { action: "test", first: "param1", second: "param2" }, success: function(data) { console.log(data) }});
+  $.ajax({url: "index.php", type: "POST", data: { action: "test", param1: "val1", param2: "val2" }, success: function(data) {...}});
   
 <br/>
+
+<strong>AngularJS Example:</strong>
+
+  $http.get("index.php", {params:{"action": "test", "param1": val1, "param2": val2}}).then(function (response) {...})
   
+<br/>
+
 <strong>PHP Example:</strong>
   
     class Action extends App {
