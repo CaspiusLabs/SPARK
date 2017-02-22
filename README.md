@@ -1,23 +1,20 @@
 # S.P.A.R.F
-Simple PHP Ajax Response Framework
+Simple PHP Ajax Response Framework Version 0.1.6.
 
-Version 0.1.6
+<strong>Description:</strong>
 
-Description:
+This is very small PHP 5/7 object oriented framework for handling ajax requests, normal html requests are also supported.
 
-This is very small PHP 5/7 object oriented framework for handling ajax requests, normal html requests are also suppoted
+<strong>Example:</strong>
 
-jQuery Example:
+http://localhost/test.php?action=test&first=1param&second=1param
 
-  $.ajax({
-	  type: "POST",
-		  data: { action: "test", 1st: "param", 2nd: "param" },
-			  success: function(data) {
 
-				}
-	});
+<strong>jQuery Example:</strong>
+
+  $.ajax({type: "POST", data: { action: "test", 1st: "param", 2nd: "param" }, success: function(data) {}});
   
-  PHP Example:
+<strong>PHP Example:</strong>
   
     class Action extends App {
 
