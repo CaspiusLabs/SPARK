@@ -1,4 +1,4 @@
-# S.P.A.R.F
+# S.P.A.R.F.
 Simple PHP Ajax Response Framework Version 0.1.6.
 
 This is very small PHP 5/7 object oriented framework for handling ajax requests, normal html requests are also supported.
