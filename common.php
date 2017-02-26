@@ -5,8 +5,8 @@
  * Common functions
  *
  * @author Caspius Labs
- * @link https://github.com/caspius/S.P.A.R.F
- * @version 0.1.6
+ * @link https://github.com/caspius/SPARF
+ * @version 0.1.7
  * @package Utils
  *
  */

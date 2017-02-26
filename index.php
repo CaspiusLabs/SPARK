@@ -5,8 +5,8 @@
  * Bootstrap and routing functions
  *
  * @author Caspius Labs
- * @link https://github.com/caspius/S.P.A.R.F
- * @version 0.1.6
+ * @link https://github.com/caspius/SPARF
+ * @version 0.1.7
  * @package Core
  *
  */
@@ -20,19 +20,21 @@ removeMagicQuotes();
 unregisterGlobals();
 
 
-// call hook
+// call hook class
 
-if ( class_exists( CALLHOOK ) ) {
+$callhook = key($_REQUEST);
 
-	$app = CALLHOOK;
+if ( class_exists( $callhook ) ) {
+
+	$app = $callhook;
 
 	$app = new $app();
 
 	$ajax = isAjax() ? AJAXHOOK : '';
 
-	if ( isset( $_REQUEST[CALLHOOK] ) ) {
+	if ( isset( $_REQUEST[$callhook] ) ) {
 
-		call_user_func_array( array( $app, $ajax.$_REQUEST[CALLHOOK] ), $_REQUEST );
+		call_user_func_array( array( $app, $ajax.$_REQUEST[$callhook] ), $_REQUEST );
 
 	} else {
 	
@@ -42,6 +44,6 @@ if ( class_exists( CALLHOOK ) ) {
 
 } else {
 
-	echo "<big>S.P.A.R. Framework Error:</big> check configuration file or reinstall.";
+	echo "<big>S.P.A.R.F. Error:</big> call hook class not found.";
 
 }
