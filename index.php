@@ -44,6 +44,6 @@ if ( class_exists( $callhook ) ) {
 
 } else {
 
-	echo "<big>S.P.A.R.F. Error:</big> call hook class not found.";
+	echo "<strong>".APP_NAME." Fatal Error:</strong> call hook class not found. Check configuration file or reinstall.";
 
 }

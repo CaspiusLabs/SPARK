@@ -14,9 +14,9 @@
 
 class App {
 	
-	protected $version = 'Simple PHP Ajax Response Framework Version 0.1.7';
+	protected $version = APP_NAME.' Version '.APP_VERSION;
 
-    protected $error = 'S.P.A.R.F. Error';
+    protected $error = APP_NAME.' Error ';
 
     protected $DNS = DBDRVR.':host='.DBHOST.';dbname='.DBNAME.';charset='.DBCHAR;
 
@@ -43,7 +43,7 @@ class App {
 	 
 	        } catch ( PDOException $exception ) {
 	 
-	            echo $this->error." [Database Connection]: ".$exception->getMessage()."\r\n";
+	            echo $this->error."[Database Connection]: ".$exception->getMessage()."\r\n";
 
 	        }
 
