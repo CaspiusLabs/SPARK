@@ -1,11 +1,11 @@
 <?php
 /**
- * Simple PHP Ajax Response Framework
+ * Simple PHP Ajax Response Kit
  *
  * Main App Class
  *
  * @author Caspius Labs
- * @link https://github.com/caspius/SPARF
+ * @link https://github.com/CaspiusLabs/SPARK
  * @version 0.1.7
  * @package App
  *
@@ -13,7 +13,7 @@
 
 
 class App {
-	
+
 	protected $version = APP_NAME.' Version '.APP_VERSION;
 
     protected $error = APP_NAME.' Error ';
@@ -24,25 +24,25 @@ class App {
 
 
 	function __construct() {
-         
-        
+
+
         // init sessions - override by setting this method in Action class
-         
+
         session_start();
 
-        
+
         // init database - override by setting this method in Action class
-	    
+
 	    if ( !empty( DBDRVR ) ) {
 
 	        try {
-	 
+
 	            $this->DB = new PDO ( $this->DNS, DBUSER, DBPASS );
 
 	            $this->DB->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-	 
+
 	        } catch ( PDOException $exception ) {
-	 
+
 	            echo $this->error."[Database Connection]: ".$exception->getMessage()."\r\n";
 
 	        }
@@ -80,19 +80,19 @@ class App {
 
 
 	function __isset( $name ) {
-		
+
         return isset( $_SESSION[$name] );
 
     }
 
 
 	function __unset( $name ) {
-        
+
  		unset( $_SESSION[$name] );
 
     }
 
- 
+
     function __destruct() {
 
     	// cleanup - override by setting this method in Action class

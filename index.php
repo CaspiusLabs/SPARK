@@ -1,11 +1,11 @@
 <?php
 /**
- * Simple PHP Ajax Response Framework
+ * Simple PHP Ajax Response Kit
  *
  * Bootstrap and routing functions
  *
  * @author Caspius Labs
- * @link https://github.com/caspius/SPARF
+ * @link https://github.com/CaspiusLabs/SPARK
  * @version 0.1.7
  * @package Core
  *
@@ -37,7 +37,7 @@ if ( class_exists( $callhook ) ) {
 		call_user_func_array( array( $app, $ajax.$_REQUEST[$callhook] ), $_REQUEST );
 
 	} else {
-	
+
 		call_user_func_array( array( $app, $ajax.DEFAULTHOOK), $_REQUEST );
 
 	}

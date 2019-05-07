@@ -1,11 +1,11 @@
 <?php
 /**
- * Simple PHP Ajax Response Framework
+ * Simple PHP Ajax Response Kit
  *
  * Common functions
  *
  * @author Caspius Labs
- * @link https://github.com/caspius/SPARF
+ * @link https://github.com/CaspiusLabs/SPARK
  * @version 0.1.7
  * @package Utils
  *
@@ -40,7 +40,7 @@ function isAjax() {
 
 
 // check if development environment and display errors
- 
+
 function setReporting() {
 
 	if ( APP_DEV_ENV ) {
@@ -68,11 +68,11 @@ function writeLog( $type = null, $message ) {
 
 
 // check for Magic Quotes and remove them
- 
+
 function stripSlashesDeep( $value ) {
 
     $value = is_array( $value ) ? array_map( 'stripSlashesDeep', $value ) : stripslashes( $value );
-    
+
     return $value;
 
 }
@@ -91,9 +91,9 @@ function removeMagicQuotes() {
 
 }
 
- 
+
 // check register globals and remove them
- 
+
 function unregisterGlobals() {
 
     if ( ini_get('register_globals') ) {

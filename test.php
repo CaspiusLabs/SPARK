@@ -1,13 +1,13 @@
 <?php
 /**
- * Simple PHP Ajax Response Framework
+ * Simple PHP Ajax Response Kit
  *
  * Test file
  *
  * WARNING: use only on development environment!
  *
  * @author Caspius Labs
- * @link https://github.com/caspius/SPARF
+ * @link https://github.com/CaspiusLabs/SPARK
  * @version 0.1.7
  * @package Utils
  *

@@ -1,11 +1,11 @@
 <?php
 /**
- * Simple PHP Ajax Response Framework
+ * Simple PHP Ajax Response Kit
  *
  * Configuration file
  *
  * @author Caspius Labs
- * @link https://github.com/caspius/SPARF
+ * @link https://github.com/CaspiusLabs/SPARK
  * @version 0.1.7
  * @package Core
  *
@@ -39,4 +39,3 @@ define( 'DS', '/' );
 define( 'APP_PATH', dirname( $_SERVER['SCRIPT_FILENAME'] ) );
 define( 'APP_ROOT', rtrim( APP_PATH, dirname( $_SERVER['SCRIPT_NAME'] ) ) );
 define( 'APP_LOG', APP_PATH.DS.'app.log' );
-
