@@ -16,7 +16,7 @@ class Action extends App {
 
     function ajax_test( $action, $param1="1", $param2="2" ) {
 
-		echo "This is test function called from ajax query and this is my values $param1 $param2";
+        echo "This is test function called from ajax query and this is my values $param1 $param2";
 
     }
 

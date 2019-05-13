@@ -14,24 +14,24 @@
 
 class App {
 
-	protected $version = APP_NAME.' Version '.APP_VERSION;
+		protected $version = APP_NAME.' Version '.APP_VERSION;
 
-    protected $error = APP_NAME.' Error ';
+  	protected $error = APP_NAME.' Error ';
 
-    protected $DNS = DBDRVR.':host='.DBHOST.';dbname='.DBNAME.';charset='.DBCHAR;
+  	protected $DNS = DBDRVR.':host='.DBHOST.';dbname='.DBNAME.';charset='.DBCHAR;
 
-    protected $DB;
-
-
-	function __construct() {
+  	protected $DB;
 
 
-        // init sessions - override by setting this method in Action class
-
-        session_start();
+		function __construct() {
 
 
-        // init database - override by setting this method in Action class
+      // init sessions - override by setting this method in Action class
+
+      session_start();
+
+
+      // init database - override by setting this method in Action class
 
 	    if ( !empty( DBDRVR ) ) {
 
@@ -47,60 +47,60 @@ class App {
 
 	        }
 
+				}
+
+    }
+
+
+		function __call( $name, $arguments ) {
+
+			// Display framework version if no action method defined in Action class
+
+			echo $this->version;
+
 		}
 
-    }
+
+	 	function __set( $name, $value ) {
+
+	 		// Save value in session if no properties defined in Action class
+
+	 		$_SESSION[$name] = $value;
+
+	 	}
 
 
-	function __call( $name, $arguments ) {
+		function __get( $name ) {
 
-		// Display framework version if no action method defined in Action class
+			// Load value from session if no properties defined in Action class
 
-		echo $this->version;
+			return $_SESSION[$name];
 
-	}
-
-
- 	function __set( $name, $value ) {
-
- 		// Save value in session if no properties defined in Action class
-
- 		$_SESSION[$name] = $value;
-
- 	}
+		}
 
 
-	function __get( $name ) {
+		function __isset( $name ) {
 
-		// Load value from session if no properties defined in Action class
+	  	return isset( $_SESSION[$name] );
 
-		return $_SESSION[$name];
-
-	}
+	  }
 
 
-	function __isset( $name ) {
+		function __unset( $name ) {
 
-        return isset( $_SESSION[$name] );
+	 		unset( $_SESSION[$name] );
 
-    }
-
-
-	function __unset( $name ) {
-
- 		unset( $_SESSION[$name] );
-
-    }
+	  }
 
 
-    function __destruct() {
+		function __destruct() {
 
-    	// cleanup - override by setting this method in Action class
+			// cleanup - override by setting this method in Action class
 
-    	unset( $this->DB );
+			unset( $this->DB );
 
-    	session_write_close();
+			session_write_close();
 
-    }
+		}
 
 }

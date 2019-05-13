@@ -25,7 +25,7 @@ function debug( $mixed ) {
 
 function noWrap( $string ) {
 
-    return str_replace( array( "\n\r", "\n", "\r" ), "", $string );
+	return str_replace( array( "\n\r", "\n", "\r" ), "", $string );
 
 }
 
@@ -71,9 +71,9 @@ function writeLog( $type = null, $message ) {
 
 function stripSlashesDeep( $value ) {
 
-    $value = is_array( $value ) ? array_map( 'stripSlashesDeep', $value ) : stripslashes( $value );
+	$value = is_array( $value ) ? array_map( 'stripSlashesDeep', $value ) : stripslashes( $value );
 
-    return $value;
+	return $value;
 
 }
 
@@ -82,10 +82,10 @@ function removeMagicQuotes() {
 
 	if ( get_magic_quotes_gpc() ) {
 
-	    $_GET = stripSlashesDeep( $_GET );
-	    $_POST = stripSlashesDeep( $_POST );
-	    $_COOKIE = stripSlashesDeep( $_COOKIE );
-	    $_SESSION = stripSlashesDeep( $_SESSION );
+		$_GET = stripSlashesDeep( $_GET );
+		$_POST = stripSlashesDeep( $_POST );
+		$_COOKIE = stripSlashesDeep( $_COOKIE );
+		$_SESSION = stripSlashesDeep( $_SESSION );
 
 	}
 
