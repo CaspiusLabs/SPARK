@@ -1,8 +1,8 @@
 # S.P.A.R.K.
-Simple PHP Ajax Response Kit Version 1.1.8
+Simple PHP Ajax Response Kit version 1.1.8
 
 This is minimal PHP 5/7 object oriented framework kit for handling ajax requests, normal html requests are also supported.
-Usable for creating API systems or buidling Single Page Applications.
+Usable for creating API systems or buidling Single Page Applications. Fast starting point for your web application or website.
 
 <br/>
 
