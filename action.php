@@ -6,7 +6,7 @@
  *
  * @author Caspius Labs
  * @link https://github.com/CaspiusLabs/SPARK
- * @version 0.1.7
+ * @version 1.1.8
  * @package App
  *
  */
