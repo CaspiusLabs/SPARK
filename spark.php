@@ -161,7 +161,7 @@ abstract class Spark {
 
 			} else {
 
-				echo '<div style="margin: 5px;padding: 5px;background-image: linear-gradient(115deg,#4fcf70,#fad648,#a767e5,#12bcfe,#44ce7b);border-radius: 6px;box-sizing: border-box;color: #9c27b0;font-family: monospace;font-weight: lighter;font-size: large;">';
+				echo '<div style="margin: 5px;padding: 1px;background-image: linear-gradient(115deg,#4fcf70,#fad648,#a767e5,#12bcfe,#44ce7b);border-radius: 6px;box-sizing: border-box;color: #9c27b0;font-family: monospace;font-weight: lighter;font-size: large;">';
 
 				echo '<strong>&nbsp;&nbsp;'.APP_NAME.' ]::[ Version '.APP_VERSION.' ]::[ Debug ]:</strong>';
 					
@@ -190,7 +190,7 @@ abstract class Spark {
 
 			} else {
 
-				echo '<div style="margin: 5px;padding: 5px;background-image: linear-gradient(115deg,#4fcf70,#fad648,#a767e5,#12bcfe,#44ce7b);border-radius: 6px;box-sizing: border-box;color: #e91e63;font-family: monospace;font-weight: lighter;font-size: large;">';
+				echo '<div style="margin: 5px;padding: 1px;background-image: linear-gradient(115deg,#4fcf70,#fad648,#a767e5,#12bcfe,#44ce7b);border-radius: 6px;box-sizing: border-box;color: #e91e63;font-family: monospace;font-weight: lighter;font-size: large;">';
 
 				echo '<strong>&nbsp;&nbsp;'.APP_NAME.' ]::[ Version '.APP_VERSION.' ]::[ Error ]:</strong>';
 
