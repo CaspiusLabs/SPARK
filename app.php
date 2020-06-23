@@ -1,106 +1,47 @@
 <?php
 /**
- * Simple PHP Ajax Response Kit
+ * ✨💥✨ </SPARK> ✨💥✨
+ * Simple.PHP.Ajax.Request.Kit
  *
- * Main App Class
+ * Main application class
  *
- * @author Caspius Labs
+ * @author Caspius Labs💖
  * @link https://github.com/CaspiusLabs/SPARK
- * @version 1.1.8
+ * @version 2.0.0
  * @package App
- *
  */
 
+class App extends Spark {
 
-class App {
+    function index( $action, $params ) {
 
-		protected $version = APP_NAME.' Version '.APP_VERSION;
+        echo "This is main index method and this is my values:";
 
-  	protected $error = APP_NAME.' Error ';
-
-  	protected $DNS = DBDRVR.':host='.DBHOST.';dbname='.DBNAME.';charset='.DBCHAR;
-
-  	protected $DB;
-
-
-		function __construct() {
-
-
-      // init sessions - override by setting this method in Action class
-
-      session_start();
-
-
-      // init database - override by setting this method in Action class
-
-	    if ( !empty( DBDRVR ) ) {
-
-	        try {
-
-	            $this->DB = new PDO ( $this->DNS, DBUSER, DBPASS );
-
-	            $this->DB->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-
-	        } catch ( PDOException $exception ) {
-
-	            echo $this->error."[Database Connection]: ".$exception->getMessage()."\r\n";
-
-	        }
-
-				}
+        self::debug('$action', $action);
+        self::debug('$params', $params);
 
     }
 
+    function ajax_index( $action, $params ) {
 
-		function __call( $name, $arguments ) {
+        echo "This is main ajax request index method!";
 
-			// Display framework version if no action method defined in Action class
+    }
+    
+    function test( $action, $param1='', $param2='' ) {
+        
+        echo "This is test function called from query string and this is my values:";
+        
+        self::debug('$action', $action);
+        self::debug('$params', $param1);
+        self::debug('$params', $param2);
+        
+    }
+    
+    function ajax_test( $action, $params ) {
 
-			echo $this->version;
+        echo "This is test function called from ajax request.";
 
-		}
-
-
-	 	function __set( $name, $value ) {
-
-	 		// Save value in session if no properties defined in Action class
-
-	 		$_SESSION[$name] = $value;
-
-	 	}
-
-
-		function __get( $name ) {
-
-			// Load value from session if no properties defined in Action class
-
-			return $_SESSION[$name];
-
-		}
-
-
-		function __isset( $name ) {
-
-	  	return isset( $_SESSION[$name] );
-
-	  }
-
-
-		function __unset( $name ) {
-
-	 		unset( $_SESSION[$name] );
-
-	  }
-
-
-		function __destruct() {
-
-			// cleanup - override by setting this method in Action class
-
-			unset( $this->DB );
-
-			session_write_close();
-
-		}
+    }
 
 }

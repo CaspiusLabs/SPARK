@@ -1,0 +1,17 @@
+# Recommended .htaccess file for </SPARK> - Simple.PHP.Ajax.Request.Kit
+
+# Turn on URL rewriting
+RewriteEngine on
+RewriteBase /
+
+# Use SSL connection only
+RewriteCond %{HTTPS} !^on$
+RewriteRule (.*) https://%{HTTP_HOST}/$1 [R]
+
+# Redirect urls to index.php
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?app=$1 [QSA]
+
+# Redirect errors
+ErrorDocument 500 https://%{HTTP_HOST}/500

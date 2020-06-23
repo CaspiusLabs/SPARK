@@ -1,32 +1,79 @@
-# S.P.A.R.K.
-Simple PHP Ajax Response Kit version 1.1.8
+ # ✨&lt;/SPARK&gt;✨
+ ## **Simple.PHP.Ajax.Request.Kit**
+ ### **Version 2.0.0**
 
-This is minimal PHP 5/7 object oriented framework kit for handling ajax requests, normal html requests are also supported.
-Usable for creating API systems or buidling Single Page Applications. Fast starting point for your web application or website.
-
-<br/>
-
-<strong>Example:</strong>
-
-http://localhost/index.php?action=test&param1=val1&param2=val2
+This is PHP 5/7 object oriented micro framework, allows to make simple or complex web pages much easier:
+* Specyfically designed to build Single Page Applications (SPA), by easy handling ajax requests or query strings.
+* Very usable for creating Rest API systems. 
+* Fast starting point for your web application or website!
 
 <br/>
 
-<strong>jQuery Example:</strong>
+<strong>Query string example:</strong>
 
-  $.ajax({url: "index.php", type: "POST", data: { action: "test", param1: "val1", param2: "val2" }, success: function(data) {...}});
-  
+http://localhost/index.php?app=test&param1=val1&param2=val2
+
 <br/>
 
-<strong>AngularJS Example:</strong>
+<strong>jQuery example:</strong>
 
-  $http.get("index.php", {params:{"action": "test", "param1": val1, "param2": val2}}).then(function (response) {...})
-  
+```javascript
+$.ajax({url: "index.php", type: "POST", data: { app: "test", param1: "val1", param2: "val2" }, success: function(data) {...}});
+```
+
+<br/>
+
+<strong>AngularJS example:</strong>
+
+```javascript
+  $http.get("index.php", {params:{"app": "test", "param1": val1, "param2": val2}}).then(function (response) {...})
+```
+
+<br/>
+
+<strong>React example:</strong>
+
+```javascript
+async function getAjax(data) {
+  const response = await fetch('http://localhost/index.php?app=test&param1=val1&param2=val2', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  });
+}
+```
+
+<br/>
+
+<strong>Vue.js example:</strong>
+
+```javascript
+new Vue({
+    el: '#app',
+    created() {
+        this.fetchData();	
+    },
+    data: {
+        values: []
+    },
+    methods: {
+        fetchData() {
+        axios.get('http://localhost/index.php?app=test&param1=val1&param2=val2').then(response => {
+            this.values = response.data;
+            });
+        }
+    }
+});
+```
+
 <br/>
 
 <strong>PHP Example:</strong>
-  
-    class Action extends App {
+
+```php  
+    class App extends Spark {
 
       function ajax_test( $action, $param1, $param2 ) {
 
@@ -41,3 +88,4 @@ http://localhost/index.php?action=test&param1=val1&param2=val2
       }
 
     }
+```

@@ -1,27 +1,22 @@
 <?php
 /**
- * Simple PHP Ajax Response Kit
+ * ✨💥✨ </SPARK> ✨💥✨
+ * Simple.PHP.Ajax.Request.Kit
  *
  * Bootstrap and routing functions
  *
- * @author Caspius Labs
+ * @author Caspius Labs💖
  * @link https://github.com/CaspiusLabs/SPARK
- * @version 1.1.8
+ * @version 2.0.0
  * @package Core
- *
  */
 
 
-require_once 'config.php'; // must run as first
-require_once 'common.php'; // must run as second
-
-setReporting();
-removeMagicQuotes();
-unregisterGlobals();
+require_once 'config.php'; // must run as first (best to place in safe unreadable directory!)
+include_once 'spark.php';  // must run as second
 
 
 // call hook class
-
 $callhook = key($_REQUEST);
 
 if ( class_exists( $callhook ) ) {
@@ -30,20 +25,14 @@ if ( class_exists( $callhook ) ) {
 
 	$app = new $app();
 
-	$ajax = isAjax() ? AJAXHOOK : '';
+	$ajax = Spark::isAjax() ? 'ajax_' : '';
 
-	if ( isset( $_REQUEST[$callhook] ) ) {
-
-		call_user_func_array( array( $app, $ajax.$_REQUEST[$callhook] ), $_REQUEST );
-
-	} else {
-
-		call_user_func_array( array( $app, $ajax.DEFAULTHOOK), $_REQUEST );
-
-	}
+	call_user_func_array( array( $app, $ajax.$_REQUEST[$callhook] ), $_REQUEST );
 
 } else {
 
-	echo "<strong>".APP_NAME." Fatal Error:</strong> call hook class not found. Check configuration file or reinstall.";
+	Spark::error("Call hook '$callhook' class missing!");
+	
+	Spark::debug('$_REQUEST', $_REQUEST);
 
 }
