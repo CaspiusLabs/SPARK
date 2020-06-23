@@ -26,7 +26,7 @@ $.ajax({url: "index.php", type: "POST", data: { app: "test", param1: "val1", par
 <strong>AngularJS example:</strong>
 
 ```javascript
-  $http.get("index.php", {params:{"app": "test", "param1": val1, "param2": val2}}).then(function (response) {...})
+$http.get("index.php", {params:{"app": "test", "param1": val1, "param2": val2}}).then(function (response) {...})
 ```
 
 <br/>
@@ -73,19 +73,19 @@ new Vue({
 <strong>PHP Example:</strong>
 
 ```php  
-    class App extends Spark {
+class App extends Spark {
 
-      function ajax_test( $action, $param1, $param2 ) {
+  function ajax_test( $action, $param1, $param2 ) {
 
-        echo "This is test function called from ajax query and this is my values $param1 $param2";
+    echo "This is test function called from ajax query and this is my values $param1 $param2";
 
-      }
-	
-      function test( $action, $param1, $param2 ) {
+  }
 
-        echo "This is test function called from url query and this is my values $param1 $param2";
+  function test( $action, $param1, $param2 ) {
 
-      }
+    echo "This is test function called from url query and this is my values $param1 $param2";
 
-    }
+  }
+
+}
 ```
