@@ -89,3 +89,33 @@ class App extends Spark {
 
 }
 ```
+
+<br/>
+
+<strong>Debug and error box messages example:</strong>
+
+```php
+class App extends Spark {
+
+    function index( $action, $params ) {
+
+        // inside class definition
+        $this->error( "No '$action' method defined in Action class!" );
+
+        $this->debug( '$_REQUEST', $_REQUEST );
+
+    }
+
+}
+
+// outside class definition
+Spark::error( message );
+
+Spark::debug( variable name, variable );
+```
+
+<br/>
+
+<strong>Result:</strong>
+
+![spark](https://user-images.githubusercontent.com/429627/85475800-fa864400-b5b6-11ea-8fdc-c29d82f597bd.png)
