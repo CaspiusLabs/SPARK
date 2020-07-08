@@ -7,11 +7,28 @@ This is PHP 5/7 object oriented micro framework, allows to make simple or comple
 * Very usable for creating Rest API systems. 
 * Fast starting point for your web application or website!
 
+Features:
+* Small size, (only four files! yes 4!), fast load times!
+* Vast configurability options, separate config file can be stored in secured dir! 
+* Secured with Remove Magic Quotes and Unregister Globals functions!
+* Works with Mod Rewrite pretty urls!
+* Multiple database engines support with PDO!
+* Custom error/fatal error/exception handlers!
+* Development helper functions like NoWrap, TrimAll, ArrayToObject, etc!  
+* Easy debugging functions, message boxes, error loggers to file or console.log!
+* It even has simple PHP template system!
+
 <br/>
 
-<strong>Query string example:</strong>
+<strong>Standard request example:</strong>
 
 http://localhost/index.php?app=test&param1=val1&param2=val2
+
+<br/>
+
+<strong>Mod rewrite request example:</strong>
+
+http://localhost/app/test/val1/val2
 
 <br/>
 
