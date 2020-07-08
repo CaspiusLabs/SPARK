@@ -1,6 +1,6 @@
  # ✨&lt;/SPARK&gt;✨
  ## **Simple.PHP.Ajax.Request.Kit**
- ### **Version 2.0.0**
+ ### **Version 2.0.1**
 
 This is PHP 5/7 object oriented micro framework, allows to make simple or complex web pages much easier:
 * Specyfically designed to build Single Page Applications (SPA), by easy handling ajax requests or query strings.

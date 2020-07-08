@@ -7,7 +7,7 @@
  *
  * @author Caspius Labs💖
  * @link https://github.com/CaspiusLabs/SPARK
- * @version 2.0.0
+ * @version 2.0.1
  * @package Core
  */
 
@@ -25,15 +25,17 @@ define( 'DBCHAR', 'utf8' );
 
 // environment
 define( 'APP_NAME', '✨ &lt;/SPARK&gt; ✨' ); // you can change this for your app name and version :}
-define( 'APP_VERSION', '2.0.0' );
+define( 'APP_VERSION', '2.0.1' );
 define( 'APP_DEV_ENV', TRUE ); // should all error and debug mesagges be visible? (on production server better not!)
 
 // options
 define( 'APP_CONSOLE_OUT', FALSE ); // should all error and debug messages be visible in console log?
-define( 'APP_AUTOINDEX', TRUE ); // should launch index method when action method is not defined?
+define( 'APP_CALLHOOK', 'app' );    // defualt call hook class name
+define( 'APP_AJAXHOOK', 'ajax_' );  // defualt ajax hook method name
+define( 'APP_INDEXHOOK', 'index' ); // default call hook method name
 
 // folders
 define( 'DS', '/' );
 define( 'APP_PATH', dirname( $_SERVER['SCRIPT_FILENAME'] ) );
 define( 'APP_ROOT', rtrim( APP_PATH, dirname( $_SERVER['SCRIPT_NAME'] ) ) );
-define( 'APP_LOG', APP_PATH.DS.'app.log' );
+define( 'APP_LOG', APP_PATH.DS.'php'.DS.'app.log' );

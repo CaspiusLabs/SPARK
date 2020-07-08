@@ -7,24 +7,21 @@
  *
  * @author Caspius Labs💖
  * @link https://github.com/CaspiusLabs/SPARK
- * @version 2.0.0
+ * @version 2.0.1
  * @package App
  */
 
 class App extends Spark {
 
-    function index( $action, $params ) {
+    function index() {
 
-        echo "This is main index method and this is my values:";
-
-        self::debug('$action', $action);
-        self::debug('$params', $params);
+        echo "This is default request index method!";
 
     }
 
-    function ajax_index( $action, $params ) {
+    function ajax_index() {
 
-        echo "This is main ajax request index method!";
+        echo "This is default ajax request index method!";
 
     }
     
@@ -32,9 +29,9 @@ class App extends Spark {
         
         echo "This is test function called from query string and this is my values:";
         
-        self::debug('$action', $action);
-        self::debug('$params', $param1);
-        self::debug('$params', $param2);
+        self::Debug('$action', $action);
+        self::Debug('$params', $param1);
+        self::Debug('$params', $param2);
         
     }
     

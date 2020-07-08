@@ -7,7 +7,7 @@
  *
  * @author Caspius Labs💖
  * @link https://github.com/CaspiusLabs/SPARK
- * @version 2.0.0
+ * @version 2.0.1
  * @package Core
  */
 
@@ -18,9 +18,9 @@ abstract class Spark {
 
 	protected $DNS = DBDRVR.':host='.DBHOST.';dbname='.DBNAME.';charset='.DBCHAR;
 	  
-	protected $version = APP_NAME.' Version '.APP_VERSION;
+	protected $Version = APP_NAME.' Version '.APP_VERSION;
 	  
-	abstract protected function index( $name, $arguments );
+	abstract function index();
 
 
 // MAGIC CLASS PUBLIC METHODS
@@ -29,9 +29,8 @@ abstract class Spark {
 	function __construct() {
 
 		// security check
-		$this->setReporting();
-		$this->removeMagicQuotes();
-		$this->unregisterGlobals();
+		$this->RemoveMagicQuotes();
+		$this->UnregisterGlobals();
 
 		// init sessions - override by setting this method in Action class
 		session_start();
@@ -47,7 +46,7 @@ abstract class Spark {
 
 			} catch ( PDOException $exception ) {
 
-				error($exception->getMessage());
+				trigger_error( $exception->getMessage(), E_USER_ERROR );
 
 			}
 		}
@@ -55,36 +54,8 @@ abstract class Spark {
 
 	function __call( $name, $arguments ) {
 
-		if ( APP_AUTOINDEX ) {
-
-			if ( $this->isAjax() ) {
-
-				$this->ajax_index( $name, $arguments );
-			
-			} else {
-
-				$this->index( $name, $arguments );
-			
-			}
-
-		} else {
-
-			// No action method defined in Action class
-			$this->error( "No '$name' method defined in Action class!" );
-			
-			$this->debug( '$_REQUEST', $_REQUEST );
-
-			$this->debug( '$_SERVER', $_SERVER );
-
-			if ( !APP_DEV_ENV ) {
-				
-				header('HTTP/1.0 404 Not Found');
-
-			}
-			
-			die;
-
-		}
+		// If no method defined fallback to index method
+		$this->index();
 
 	}
 
@@ -126,7 +97,146 @@ abstract class Spark {
 
 // HELPER PUBLIC STATIC METHODS
 
-	public static function debugConsole( $name, $mixed ) {
+	public static function ErrorHandler( $errno, $errstr, $errfile, $errline ) {
+
+		if ( !(error_reporting() & $errno) ) {
+
+			return false;
+		}
+
+		switch ($errno) {
+
+			case E_USER_ERROR:
+				self::Error( "Type: [$errno] $errstr<br>File: $errfile<br>Line: $errline" );
+				exit(1);
+				break;
+
+			case E_USER_WARNING:
+				self::Warning( "Type: [$errno] $errstr<br>File: $errfile<br>Line: $errline" );
+				break;
+
+			case E_USER_NOTICE:
+				self::Notice( "Type: [$errno] $errstr<br>File: $errfile<br>Line: $errline" );
+				break;
+
+			default:
+				self::Warning( "Type: [$errno] $errstr<br>File: $errfile<br>Line: $errline" );
+				break;
+		}
+
+		return true;
+
+	}
+
+	public static function FatalErrorHandler() {
+
+		$error = error_get_last();
+
+		self::Error( "Type: [".$error['type']."] ".$error['message']."<br>File: ".$error['file']."<br>Line: ".$error['line'] );
+		
+	}
+
+	public static function ExceptionHandler( $exception ) {
+		
+		self::Error( "Uncaught exception: ", $exception->getMessage() );
+
+	}
+	
+	public static function Debug( $name, $mixed ) {
+		
+		// for developing purposes only!
+		if ( APP_DEV_ENV ) {
+
+			if ( APP_CONSOLE_OUT ) {
+				
+				self::DisplayConsole( '[ '.APP_NAME.' ]::[ Version '.APP_VERSION.' ]::[ '.$name.' ]: ', $mixed );
+
+			} else {
+
+				$message = '<strong>'.$name.':</strong> '.print_r( $mixed, true ).'</pre></div>';
+
+				self::DisplayBox( 'Debug', '#9c27b0', $message );
+
+			}
+
+		} else {
+
+			self::Logger( 'Debug', $name.': '.print_r( $mixed, true ) );
+
+		}
+
+	}
+
+	public static function Error( $message ) {
+		
+		// display error
+		if ( APP_DEV_ENV ) {
+
+			if ( APP_CONSOLE_OUT ) {
+				
+				self::DisplayConsole( '[ '.APP_NAME.' ]::[ Version '.APP_VERSION.' ]::[ Error ]: ', $message );
+
+			} else {
+
+				self::DisplayBox( 'Error', '#e91e63', $message );
+
+			}
+
+		} else {
+
+			self::Logger( 'Error', $message );
+
+		}
+
+	}
+
+	public static function Warning( $message ) {
+		
+		// display error
+		if ( APP_DEV_ENV ) {
+
+			if ( APP_CONSOLE_OUT ) {
+				
+				self::DisplayConsole( '[ '.APP_NAME.' ]::[ Version '.APP_VERSION.' ]::[ Warning ]: ', $message );
+
+			} else {
+
+				self::DisplayBox( 'Warning', '#299515', $message );
+
+			}
+
+		} else {
+
+			self::Logger( 'Warning', $message );
+
+		}
+
+	}
+
+	public static function Notice( $message ) {
+		
+		// display error
+		if ( APP_DEV_ENV ) {
+
+			if ( APP_CONSOLE_OUT ) {
+				
+				self::DisplayConsole( '[ '.APP_NAME.' ]::[ Version '.APP_VERSION.' ]::[ Notice ]: ', $message );
+
+			} else {
+
+				self::DisplayBox( 'Notice', '#0072ff', $message );
+
+			}
+
+		} else {
+
+			self::Logger( 'Notice', $message );
+
+		}
+
+	}
+
+	public static function DisplayConsole( $name, $mixed ) {
 		
 		// send output of print_r to javascript console
 		echo "<script>\r\n//<![CDATA[\r\nif(!console){var console={log:function(){}}}";
@@ -149,118 +259,79 @@ abstract class Spark {
 		echo "\r\n//]]>\r\n</script>";
 
 	}
-	
-	public static function debug( $name, $mixed ) {
-		
-		// for developing purposes only!
-		if ( APP_DEV_ENV ) {
 
-			if ( APP_CONSOLE_OUT ) {
-			
-				self::debugConsole( '[ '.APP_NAME.' ]::[ Version '.APP_VERSION.' ]::[ '.$name.' ]: ', $mixed );
+	public static function DisplayBox( $name, $hexcolor, $message ) {
 
-			} else {
+		echo '<div style="width: auto;box-sizing: border-box;margin: 5px;padding: 1px;background-image: linear-gradient(115deg,#4fcf70,#fad648,#a767e5,#12bcfe,#44ce7b);border-radius: 6px;box-sizing: border-box;color: '.$hexcolor.';font-family: monospace;font-weight: lighter;font-size: 1rem;">';
 
-				echo '<div style="margin: 5px;padding: 1px;background-image: linear-gradient(115deg,#4fcf70,#fad648,#a767e5,#12bcfe,#44ce7b);border-radius: 6px;box-sizing: border-box;color: #9c27b0;font-family: monospace;font-weight: lighter;font-size: large;">';
+		echo '<strong>&nbsp;&nbsp;'.APP_NAME.' ]::[ v'.APP_VERSION.' ]::[ '.$name.' ]:</strong>';
 
-				echo '<strong>&nbsp;&nbsp;'.APP_NAME.' ]::[ Version '.APP_VERSION.' ]::[ Debug ]:</strong>';
-					
-				echo '<pre style="margin: 5px;padding: 5px;background: #000;border-radius: 6px;box-sizing: border-box;color: #fff;">';
-
-				echo '<strong>'.$name.':</strong> '.print_r( $mixed, true ).'</pre></div>';
-
-			}
-
-		} else {
-
-			self::logger( 'Debug', $name.': '.print_r( $mixed, true ) );
-
-		}
-
-	}
-
-	public static function error( $message ) {
-		
-		// display error
-		if ( APP_DEV_ENV ) {
-
-			if ( APP_CONSOLE_OUT ) {
-			
-				self::debugConsole( '[ '.APP_NAME.' ]::[ Version '.APP_VERSION.' ]::[ Error ]: ', $message );
-
-			} else {
-
-				echo '<div style="margin: 5px;padding: 1px;background-image: linear-gradient(115deg,#4fcf70,#fad648,#a767e5,#12bcfe,#44ce7b);border-radius: 6px;box-sizing: border-box;color: #e91e63;font-family: monospace;font-weight: lighter;font-size: large;">';
-
-				echo '<strong>&nbsp;&nbsp;'.APP_NAME.' ]::[ Version '.APP_VERSION.' ]::[ Error ]:</strong>';
-
-				echo '<pre style="margin: 5px;padding: 5px;background: #000;border-radius: 6px;box-sizing: border-box;color: #fff;">'.$message.'</pre>';
-
-				echo '</div>';
-
-			}
-
-		} else {
-
-			self::logger( 'Error', $message );
-
-		}
+		echo '<pre style="margin: 5px;padding: 5px;background: #000;border-radius: 6px;box-sizing: border-box;color: #fff;">'.$message.'</pre></div>';
 
 	}
 	
-	public static function logger( $type = null, $message ) {
+	public static function Logger( $type = null, $message ) {
 		
 		// write log file
-		error_log( date( "[Y-m-d H:i:s] ") . "[" . $type . "]: " . nowrap($message) . "\r\n", 3, APP_LOG );
+		error_log( date( "[Y-m-d H:i:s] ") . "[" . $type . "]: " . NoWrap($message) . "\r\n", 3, APP_LOG );
 
 	}
 
-	public static function nowrap( $string ) {
+	public static function NoWrap( $string ) {
 		
 		// remowe wrap characters from strings
 		return str_replace( array( "\n\r", "\n", "\r" ), "", $string );
 
 	}
 
-	public static function trimall( $string, $chars = " \t\n\r\0\x0B" ) {
+	public static function TrimAll( $string, $chars = " \t\n\r\0\x0B" ) {
 		
 		// trim whole string
 		return str_replace(str_split($chars), '', $string);
 
 	}
 
-	public static function textual( $datetime ) {
+	public static function Textual( $datetime ) {
 		
 		// format textual date
 		return date('l jS \o\f F Y \a\t G:i A.', strtotime( $datetime ));
 
 	}
 
-	public static function arrayToObject( $array ) {
+	public static function ArrayToObject( $array ) {
 		
 		// make object out of array
-		if(!is_array($array))
-		return $array;
+		if ( !is_array($array) ) {
+			
+			return $array;
+
+		}
 
 		$object = new stdClass();
-		if (is_array($array) && count($array) > 0) {
-		foreach ($array as $name=>$value) {
-			$name = strtolower(trim($name));
-			if (!empty($name))
-				$object->$name = arrayToObject($value);
-		}
-		return $object;
+		
+		if ( is_array($array) && count($array) > 0 ) {
+			
+			foreach ( $array as $name=>$value ) {
+				$name = strtolower(trim($name));
+				if ( !empty($name) )
+				$object->$name = ArrayToObject($value);
+			}
+			
+			return $object;
+		
 		} else
-		return false;
+		
+			return false;
 
 	}
 
-	public static function literal( $array ) {
+	public static function Literal( $array ) {
 		
 		// literal array
 		$result = '';
-		if(is_array($array)){
-			foreach ($array as $value) {
+		if ( is_array($array) ) {
+
+			foreach ( $array as $value ) {
 				$result.= $value.' ';
 			}
 			return $result;
@@ -268,7 +339,7 @@ abstract class Spark {
 
 	}
 
-	public static function isAjax() {
+	public static function IsAjax() {
 		
 		// check if request is ajax type
 		return !empty( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && strtolower( $_SERVER['HTTP_X_REQUESTED_WITH'] ) == 'xmlhttprequest';
@@ -278,7 +349,7 @@ abstract class Spark {
 
 // HELPER PROTECTED METHODS
 
-	protected function displayTemplate( $file_name, $vars = array() ) {		
+	protected function ParseTemplate( $file_name, $vars = array() ) {		
 		
 		// parse html file with php language like <?php echo $var >
 		ob_start();
@@ -295,10 +366,10 @@ abstract class Spark {
 
 	}
 
-	protected function stripSlashesDeep( $value ) {
+	protected function StripSlashesDeep( $value ) {
 		
 		// check for Magic Quotes and remove them
-		$value = is_array( $value ) ? array_map( 'stripSlashesDeep', $value ) : stripslashes( $value );
+		$value = is_array( $value ) ? array_map( 'StripSlashesDeep', $value ) : stripslashes( $value );
 
 		return $value;
 
@@ -307,37 +378,20 @@ abstract class Spark {
 		
 // PRIVATE SECURITY METHODS
 
-	private function setReporting() {
-		
-		// check if development environment and display errors
-		if ( APP_DEV_ENV ) {
-			
-			ini_set( 'error_reporting', E_ALL );
-			ini_set( 'display_errors', 1 );
-			
-		} else {
-			
-			ini_set( 'error_reporting', 0 );
-			ini_set( 'display_errors', 0 );
-			
-		}
-		
-	}
-
-	private function removeMagicQuotes() {
+	private function RemoveMagicQuotes() {
 
 		if ( get_magic_quotes_gpc() ) {
 
-			$_GET = $this->stripSlashesDeep( $_GET );
-			$_POST = $this->stripSlashesDeep( $_POST );
-			$_COOKIE = $this->stripSlashesDeep( $_COOKIE );
-			$_SESSION = $this->stripSlashesDeep( $_SESSION );
+			$_GET = $this->StripSlashesDeep( $_GET );
+			$_POST = $this->StripSlashesDeep( $_POST );
+			$_COOKIE = $this->StripSlashesDeep( $_COOKIE );
+			$_SESSION = $this->StripSlashesDeep( $_SESSION );
 
 		}
 
 	}
 	
-	private function unregisterGlobals() {
+	private function UnregisterGlobals() {
 		
 		// check register globals and remove them
 		if ( ini_get('register_globals') ) {
@@ -357,20 +411,6 @@ abstract class Spark {
 			}
 		}
 	}
-
-}
-
+	
 // END OF SPARK CLASS
-
-function __autoload( $className ) {
-		
-	// class autoload
-	$class = strtolower( $className ).'.php';
-
-	if ( file_exists( $class ) ) {
-
-		include_once $class;
-
-	}
-
 }

@@ -2,16 +2,10 @@
 
 # Turn on URL rewriting
 RewriteEngine on
+
+# Installation directory
 RewriteBase /
 
-# Use SSL connection only
-RewriteCond %{HTTPS} !^on$
-RewriteRule (.*) https://%{HTTP_HOST}/$1 [R]
-
-# Redirect urls to index.php
-#RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?app=$1 [QSA]
-
-# Redirect errors
-ErrorDocument 500 https://%{HTTP_HOST}/500
+# Redirect non existing urls to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule .* index.php
